@@ -1,0 +1,167 @@
+/* Reset Básico e Estilos Globais */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #121212;
+  color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Bloco Principal: Gerador de QR Code */
+.qr-generator {
+  display: flex;
+  gap: 32px;
+  background-color: #1e1e1e;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Elemento: Painel de Controles */
+.qr-generator__controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 450px;
+}
+
+.qr-generator__title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #333;
+  padding-bottom: 12px;
+}
+
+/* Elemento: Painel de Pré-visualização */
+.qr-generator__preview {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.qr-generator__canvas {
+  width: 300px;
+  height: 300px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.qr-generator__info {
+  font-size: 14px;
+  color: #888;
+  background-color: #2a2a2a;
+  padding: 6px 12px;
+  border-radius: 16px;
+}
+
+/* Componente reutilizável: Grupo de Controle */
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-group__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #aaa;
+}
+
+.control-group__input,
+.control-group__file-input,
+.control-group__color-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+.control-group__input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.control-group__row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.control-group__row--buttons {
+  margin-top: 8px;
+}
+
+.control-group__column {
+  flex: 1;
+}
+
+.control-group__color-input {
+  padding: 4px;
+  height: 42px; /* Alinha com a altura do select */
+  min-width: 50px;
+  flex-shrink: 0;
+}
+
+.control-group__file-input::file-selector-button {
+  background-color: #444;
+  color: #eee;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+/* Componente reutilizável: Botão */
+.button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button--primary {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.button--primary:hover {
+  background-color: #0056b3;
+}
+
+.button--secondary {
+  background-color: #555;
+  color: #ffffff;
+}
+
+.button--secondary:hover {
+  background-color: #777;
+}

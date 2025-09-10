@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de QR Code Profissional</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <main class="qr-generator">
+    <!-- Painel de Controles -->
+    <div class="qr-generator__controls">
+      <h1 class="qr-generator__title">Gerador de QR Code</h1>
+
+      <!-- Grupo: Conteúdo -->
+      <div class="control-group">
+        <label for="qrData" class="control-group__label">Texto / URL</label>
+        <input type="text" id="qrData" class="control-group__input" value="https://github.com/manus-team">
+      </div>
+
+      <!-- Grupo: Estilo dos Módulos -->
+      <div class="control-group">
+        <label class="control-group__label">Estilo dos Módulos</label>
+        <div class="control-group__row">
+          <select id="dotType" class="control-group__input" title="Define o formato dos 'pontos' do QR Code.">
+            <option value="square">Quadrado</option>
+            <option value="dots">Pontos</option>
+            <option value="rounded">Arredondado</option>
+            <option value="extra-rounded">Extra Arredondado</option>
+            <option value="classy">Classy</option>
+            <option value="classy-rounded">Classy Arredondado</option>
+          </select>
+          <input type="color" id="dotColor" class="control-group__color-input" value="#000000" title="Cor dos módulos do QR Code.">
+        </div>
+      </div>
+
+      <!-- Grupo: Fundo -->
+      <div class="control-group">
+        <label for="bgColor" class="control-group__label">Cor de Fundo</label>
+        <input type="color" id="bgColor" class="control-group__color-input" value="#ffffff" title="Cor de fundo do QR Code.">
+      </div>
+
+      <!-- Grupo: Margem e Logo -->
+      <div class="control-group">
+        <div class="control-group__row">
+          <div class="control-group__column">
+            <label for="margin" class="control-group__label">Margem (px )</label>
+            <input type="number" id="margin" class="control-group__input" value="16" min="0" title="Espaço em branco ao redor do QR Code, em pixels.">
+          </div>
+          <div class="control-group__column">
+            <label for="logoInput" class="control-group__label">Logo</label>
+            <input type="file" id="logoInput" class="control-group__file-input" accept="image/png, image/jpeg, image/svg+xml">
+          </div>
+        </div>
+      </div>
+
+      <!-- Grupo: Opções Avançadas -->
+      <div class="control-group">
+        <label for="errorCorrectionLevel" class="control-group__label">Nível de Correção de Erro</label>
+        <select id="errorCorrectionLevel" class="control-group__input" title="Quanto maior o nível, mais fácil a leitura caso o QR Code esteja danificado ou com um logo.">
+          <option value="L">Baixo (L)</option>
+          <option value="M" selected>Médio (M)</option>
+          <option value="Q">Alto (Q)</option>
+          <option value="H">Máximo (H)</option>
+        </select>
+      </div>
+
+      <!-- Grupo: Download -->
+      <div class="control-group">
+        <label for="fileName" class="control-group__label">Nome do Arquivo</label>
+        <input type="text" id="fileName" class="control-group__input" value="meu-qrcode">
+        <div class="control-group__row control-group__row--buttons">
+          <button id="downloadPNG" class="button button--primary">Baixar PNG</button>
+          <button id="downloadSVG" class="button button--secondary">Baixar SVG</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel de Pré-visualização -->
+    <div class="qr-generator__preview">
+      <div id="canvas" class="qr-generator__canvas"></div>
+      <div id="infoBox" class="qr-generator__info">Tamanho: 300x300px</div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="assets/js/libs/qr-code-styling.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
