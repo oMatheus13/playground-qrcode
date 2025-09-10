@@ -37,37 +37,33 @@
     .qr-playground {
       display: flex;
       gap: 32px;
-      align-items: center;
+      align-items: stretch; /* Estica os filhos para a mesma altura */
       background-color: var(--surface-color);
       padding: 28px;
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      width: 75vw; /* 75% da largura da viewport */
-      max-width: 900px;
-      min-width: 750px;
-      height: 85vh; /* 85% da altura da viewport */
-      max-height: 600px;
+      width: 80vw;
+      max-width: 1100px;
+      min-width: 900px;
+      height: 85vh;
+      max-height: 700px;
     }
 
-    .qr-playground__controls {
+    .qr-playground__column {
       flex: 1;
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Distribui o espaço */
-      height: 100%;
-      max-width: 500px;
+      justify-content: space-between;
     }
 
-    .controls-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .qr-playground__column--preview {
+      gap: 20px;
     }
 
-    .qr-playground__preview {
-      flex-shrink: 0;
-      width: 320px;
-      height: 320px;
+    .controls-wrapper { display: flex; flex-direction: column; gap: 14px; }
+
+    .qr-playground__preview-area {
+      flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -75,7 +71,8 @@
 
     .qr-playground__canvas {
       width: 100%;
-      height: 100%;
+      max-width: 256px;
+      aspect-ratio: 1 / 1;
       background-color: white;
       border-radius: 8px;
       display: flex;
@@ -88,41 +85,20 @@
     .control { display: flex; flex-direction: column; gap: 6px; }
     .control--row { display: flex; gap: 12px; align-items: flex-end; }
     .control--column { flex: 1; }
-    .control__label { font-size: 14px; font-weight: 500; color: var(--secondary-text-color); }
-    .control__input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background-color: var(--input-bg-color);
-      color: var(--primary-text-color);
-      font-size: 14px;
-      box-sizing: border-box;
-    }
+    .control__label { font-size: 14px; font-weight: 500; color: var(--secondary-text-color); display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .control__label span:last-child { font-size: 12px; color: #888; }
+    .control__input { width: 100%; height: 42px; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background-color: var(--input-bg-color); color: var(--primary-text-color); font-size: 14px; box-sizing: border-box; }
     .control__input:focus { outline: none; border-color: var(--button-primary-bg); }
-    .control__input[type="color"] { padding: 2px; height: 42px; }
+    .control__input:disabled { background-color: #222; color: #777; cursor: not-allowed; }
+    .control__input[type="color"] { padding: 2px; }
+    .control__input[type="range"] { padding: 0; }
+    .control__input[type="file"] { padding: 4px; }
 
-    .color-preset {
-      padding: 4px 6px;
-      font-size: 10px;
-      background: #555;
-      border: none;
-      color: #fff;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+    .color-preset { height: 42px; padding: 0 10px; font-size: 12px; background: #3a3a3a; border: 1px solid var(--border-color); color: #ccc; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+    .color-preset:hover { background-color: #4a4a4a; }
 
     .button-group { display: flex; gap: 12px; }
-    .button {
-      flex: 1;
-      padding: 12px;
-      border-radius: 6px;
-      border: none;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
+    .button { flex: 1; padding: 12px; border-radius: 6px; border: none; font-size: 15px; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; }
     .button--primary { background-color: var(--button-primary-bg); color: #ffffff; }
     .button--primary:hover { background-color: var(--button-primary-hover); }
     .button--secondary { background-color: var(--button-secondary-bg); color: #ffffff; }
@@ -130,40 +106,41 @@
     .button--danger { background-color: var(--button-danger-bg); color: #ffffff; }
     .button--danger:hover { background-color: var(--button-danger-hover); }
 
-    .info-box {
-      flex: 1;
-      font-size: 13px;
-      color: var(--secondary-text-color);
-      padding: 10px 12px;
-      background-color: var(--info-bg-color);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      text-align: center;
-      height: 42px;
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .info-box { flex: 1; font-size: 13px; color: var(--secondary-text-color); padding: 10px 12px; background-color: var(--info-bg-color); border: 1px solid var(--border-color); border-radius: 6px; text-align: center; height: 42px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; }
+
+    .footer-actions { text-align: center; margin-top: 10px; }
+    #downloadHtmlButton { background: none; border: none; color: var(--secondary-text-color); font-size: 12px; text-decoration: underline; cursor: pointer; }
+    #downloadHtmlButton:hover { color: var(--primary-text-color); }
   </style>
 </head>
 <body>
 
   <main class="qr-playground">
-    <!-- Coluna de Controles -->
-    <div class="qr-playground__controls">
+    <!-- Coluna de Conteúdo e Preview -->
+    <div class="qr-playground__column qr-playground__column--preview">
+        <h2 style="margin: 0;">Playground QR Code</h2>
+
       <div class="controls-wrapper">
-        <h2 style="margin: 0;">Gerador QR Code</h2>
-
         <div class="control">
-          <label for="fileName" class="control__label">Nome do arquivo</label>
-          <input type="text" id="fileName" class="control__input" placeholder="Meu qrcode">
+          <label for="fileName" class="control__label">Nome do arquivo de saída</label>
+          <input type="text" id="fileName" class="control__input" placeholder="ex: meu-qrcode-evento">
         </div>
 
         <div class="control">
-          <label for="qrData" class="control__label">Conteúdo (URL ou Texto)</label>
-          <input type="text" id="qrData" class="control__input" placeholder="https://meusite.com">
+          <label for="qrData" class="control__label">Conteúdo do QR Code (URL ou Texto)</label>
+          <input type="text" id="qrData" class="control__input" placeholder="https://seusite.com">
         </div>
+      </div>
+
+      <div class="qr-playground__preview-area">
+        <div id="canvas" class="qr-playground__canvas"></div>
+      </div>
+    </div>
+
+    <!-- Coluna de Controles de Personalização -->
+    <div class="qr-playground__column">
+      <div class="controls-wrapper">
+        <h2 style="margin: 0;">Personalização</h2>
 
         <div class="control--row">
           <div class="control--column">
@@ -180,8 +157,8 @@
               <option value="square">Quadrado</option>
               <option value="dots">Pontos</option>
               <option value="rounded">Arredondado</option>
-              <option value="extra-rounded">Extra Arredondado</option>
               <option value="classy-rounded">Classy Arredondado</option>
+              <option value="extra-rounded">Extra Arredondado</option>
             </select>
           </div>
           <div class="control--column">
@@ -218,34 +195,39 @@
           <label for="logoInput" class="control__label">Logo (Opcional)</label>
           <input type="file" id="logoInput" class="control__input" accept="image/png, image/jpeg, image/svg+xml">
         </div>
+
+        <div class="control--row" id="logoOptions">
+          <div class="control--column">
+            <label for="logoSize" class="control__label">Tamanho Logo <span id="logoSizeLabel">20%</span></label>
+            <input type="range" id="logoSize" class="control__input" value="0.2" min="0.1" max="0.4" step="0.05">
+          </div>
+          <div class="control--column">
+            <label for="logoMargin" class="control__label">Margem Logo (mód.)</label>
+            <input type="number" id="logoMargin" class="control__input" value="1" min="0" title="Espaço ao redor do logo. Cada módulo = 8px.">
+          </div>
+        </div>
       </div>
 
-      <div class="button-group">
-        <button id="downloadPNG" class="button button--primary">Baixar PNG</button>
-        <button id="downloadSVG" class="button button--secondary">Baixar SVG</button>
-        <button id="resetButton" class="button button--danger">Resetar</button>
+      <div class="footer-actions">
+        <div class="button-group">
+          <button id="downloadPNG" class="button button--primary">Baixar PNG</button>
+          <button id="downloadSVG" class="button button--secondary">Baixar SVG</button>
+          <button id="resetButton" class="button button--danger">Resetar</button>
+        </div>
+        <button id="downloadHtmlButton">Baixar esta página para uso offline</button>
       </div>
-    </div>
-
-    <!-- Coluna de Pré-visualização -->
-    <div class="qr-playground__preview">
-      <div id="canvas" class="qr-playground__canvas"></div>
     </div>
   </main>
 
   <script>
     const MODULE_SIZE_PX = 8;
     const defaultValues = {
-      qrData: '',
-      fileName: '',
-      marginModules: 2,
-      dotType: 'square',
-      errorCorrection: 'M',
-      dotColor: '#000000',
-      bgColor: '#ffffff',
+      qrData: '', fileName: '', marginModules: 2, dotType: 'square',
+      errorCorrection: 'M', dotColor: '#000000', bgColor: '#ffffff',
+      logoSize: 0.2, logoMargin: 1,
     };
 
-    function getOptions() {
+    function getOptions( ) {
       const data = document.getElementById("qrData").value;
       const marginModules = parseInt(document.getElementById("marginModules").value);
       const dotType = document.getElementById("dotType").value;
@@ -253,17 +235,18 @@
       const bgColor = document.getElementById("bgColor").value;
       const errorCorrection = document.getElementById("errorCorrection").value;
       const logoInput = document.getElementById("logoInput").files[0];
+      const logoSize = parseFloat(document.getElementById("logoSize").value);
+      const logoMargin = parseInt(document.getElementById("logoMargin").value);
 
       return {
         opts: {
-          width: 320, height: 320, type: "svg",
-          data: data || " ",
+          width: 256, height: 256, type: "svg", data: data || " ",
           image: logoInput ? URL.createObjectURL(logoInput) : null,
           margin: marginModules * MODULE_SIZE_PX,
           qrOptions: { errorCorrectionLevel: errorCorrection },
           dotsOptions: { type: dotType, color: dotColor },
           backgroundOptions: { color: bgColor },
-          imageOptions: { crossOrigin: "anonymous", margin: 4 }
+          imageOptions: { crossOrigin: "anonymous", imageSize: logoSize, margin: logoMargin * MODULE_SIZE_PX }
         },
         marginModules
       };
@@ -291,8 +274,34 @@
       }, 150);
     }
 
+    function handleLogoChange() {
+      const logoInput = document.getElementById('logoInput');
+      const errorCorrectionSelect = document.getElementById('errorCorrection');
+      if (logoInput.files.length > 0) {
+        errorCorrectionSelect.value = 'H';
+        errorCorrectionSelect.disabled = true;
+      } else {
+        errorCorrectionSelect.disabled = false;
+      }
+      updateQRCode();
+    }
+
+    function downloadHtml() {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'gerador-qrcode.html';
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    }
+
     function setupEventListeners() {
-      document.querySelectorAll("input, select").forEach(el => el.addEventListener("input", updateQRCode));
+      document.querySelectorAll("input:not(#logoInput), select").forEach(el => el.addEventListener("input", updateQRCode));
+      document.getElementById('logoInput').addEventListener('change', handleLogoChange);
 
       ['dotColor', 'bgColor'].forEach(id => {
         const colorPicker = document.getElementById(id);
@@ -306,9 +315,16 @@
         });
       });
 
+      const logoSizeSlider = document.getElementById('logoSize');
+      const logoSizeLabel = document.getElementById('logoSizeLabel');
+      logoSizeSlider.addEventListener('input', () => {
+        logoSizeLabel.textContent = `${Math.round(logoSizeSlider.value * 100)}%`;
+      });
+
       document.getElementById("downloadPNG").addEventListener("click", () => download('png'));
       document.getElementById("downloadSVG").addEventListener("click", () => download('svg'));
       document.getElementById("resetButton").addEventListener("click", resetAll);
+      document.getElementById("downloadHtmlButton").addEventListener("click", downloadHtml);
     }
 
     function download(ext) {
@@ -329,11 +345,17 @@
     function resetAll() {
       if (!confirm("Tem certeza que deseja resetar todas as opções?")) return;
       Object.keys(defaultValues).forEach(key => {
-        document.getElementById(key).value = defaultValues[key];
+        const el = document.getElementById(key);
+        if (el) el.value = defaultValues[key];
       });
+
       document.getElementById('logoInput').value = '';
+      document.getElementById('errorCorrection').disabled = false;
+      document.getElementById('logoSizeLabel').textContent = `${Math.round(defaultValues.logoSize * 100)}%`;
+
       resetColor('dotColor', defaultValues.dotColor);
       resetColor('bgColor', defaultValues.bgColor);
+
       updateQRCode();
     }
 
