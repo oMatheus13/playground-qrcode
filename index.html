@@ -2,90 +2,343 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerador de QR Code Profissional</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <title>Gerador QR Code Definitivo</title>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+  <style>
+    :root {
+      --bg-color: #121212;
+      --surface-color: #1e1e1e;
+      --primary-text-color: #e0e0e0;
+      --secondary-text-color: #aaa;
+      --border-color: #333;
+      --input-bg-color: #2a2a2a;
+      --button-primary-bg: #007bff;
+      --button-primary-hover: #0056b3;
+      --button-secondary-bg: #444;
+      --button-secondary-hover: #666;
+      --button-danger-bg: #dc3545;
+      --button-danger-hover: #c82333;
+      --info-bg-color: #2c2c2c;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color );
+      color: var(--primary-text-color);
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .qr-playground {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      background-color: var(--surface-color);
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      width: 75vw; /* 75% da largura da viewport */
+      max-width: 900px;
+      min-width: 750px;
+      height: 85vh; /* 85% da altura da viewport */
+      max-height: 600px;
+    }
+
+    .qr-playground__controls {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; /* Distribui o espaço */
+      height: 100%;
+      max-width: 500px;
+    }
+
+    .controls-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .qr-playground__preview {
+      flex-shrink: 0;
+      width: 320px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-playground__canvas {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+
+    .control { display: flex; flex-direction: column; gap: 6px; }
+    .control--row { display: flex; gap: 12px; align-items: flex-end; }
+    .control--column { flex: 1; }
+    .control__label { font-size: 14px; font-weight: 500; color: var(--secondary-text-color); }
+    .control__input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background-color: var(--input-bg-color);
+      color: var(--primary-text-color);
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .control__input:focus { outline: none; border-color: var(--button-primary-bg); }
+    .control__input[type="color"] { padding: 2px; height: 42px; }
+
+    .color-preset {
+      padding: 4px 6px;
+      font-size: 10px;
+      background: #555;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .button-group { display: flex; gap: 12px; }
+    .button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 6px;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .button--primary { background-color: var(--button-primary-bg); color: #ffffff; }
+    .button--primary:hover { background-color: var(--button-primary-hover); }
+    .button--secondary { background-color: var(--button-secondary-bg); color: #ffffff; }
+    .button--secondary:hover { background-color: var(--button-secondary-hover); }
+    .button--danger { background-color: var(--button-danger-bg); color: #ffffff; }
+    .button--danger:hover { background-color: var(--button-danger-hover); }
+
+    .info-box {
+      flex: 1;
+      font-size: 13px;
+      color: var(--secondary-text-color);
+      padding: 10px 12px;
+      background-color: var(--info-bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      text-align: center;
+      height: 42px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
 
-  <main class="qr-generator">
-    <!-- Painel de Controles -->
-    <div class="qr-generator__controls">
-      <h1 class="qr-generator__title">Gerador de QR Code</h1>
+  <main class="qr-playground">
+    <!-- Coluna de Controles -->
+    <div class="qr-playground__controls">
+      <div class="controls-wrapper">
+        <h2 style="margin: 0;">Gerador QR Code</h2>
 
-      <!-- Grupo: Conteúdo -->
-      <div class="control-group">
-        <label for="qrData" class="control-group__label">Texto / URL</label>
-        <input type="text" id="qrData" class="control-group__input" value="https://github.com/manus-team">
-      </div>
-
-      <!-- Grupo: Estilo dos Módulos -->
-      <div class="control-group">
-        <label class="control-group__label">Estilo dos Módulos</label>
-        <div class="control-group__row">
-          <select id="dotType" class="control-group__input" title="Define o formato dos 'pontos' do QR Code.">
-            <option value="square">Quadrado</option>
-            <option value="dots">Pontos</option>
-            <option value="rounded">Arredondado</option>
-            <option value="extra-rounded">Extra Arredondado</option>
-            <option value="classy">Classy</option>
-            <option value="classy-rounded">Classy Arredondado</option>
-          </select>
-          <input type="color" id="dotColor" class="control-group__color-input" value="#000000" title="Cor dos módulos do QR Code.">
+        <div class="control">
+          <label for="fileName" class="control__label">Nome do arquivo</label>
+          <input type="text" id="fileName" class="control__input" placeholder="Meu qrcode">
         </div>
-      </div>
 
-      <!-- Grupo: Fundo -->
-      <div class="control-group">
-        <label for="bgColor" class="control-group__label">Cor de Fundo</label>
-        <input type="color" id="bgColor" class="control-group__color-input" value="#ffffff" title="Cor de fundo do QR Code.">
-      </div>
+        <div class="control">
+          <label for="qrData" class="control__label">Conteúdo (URL ou Texto)</label>
+          <input type="text" id="qrData" class="control__input" placeholder="https://meusite.com">
+        </div>
 
-      <!-- Grupo: Margem e Logo -->
-      <div class="control-group">
-        <div class="control-group__row">
-          <div class="control-group__column">
-            <label for="margin" class="control-group__label">Margem (px )</label>
-            <input type="number" id="margin" class="control-group__input" value="16" min="0" title="Espaço em branco ao redor do QR Code, em pixels.">
+        <div class="control--row">
+          <div class="control--column">
+            <label for="marginModules" class="control__label">Margem (módulos)</label>
+            <input type="number" id="marginModules" class="control__input" value="2" min="0" title="Espaço em branco ao redor. Cada módulo = 8px.">
           </div>
-          <div class="control-group__column">
-            <label for="logoInput" class="control-group__label">Logo</label>
-            <input type="file" id="logoInput" class="control-group__file-input" accept="image/png, image/jpeg, image/svg+xml">
+          <div class="info-box" id="infoBox">Módulos: -- | Tamanho: -- px</div>
+        </div>
+
+        <div class="control--row">
+          <div class="control--column">
+            <label for="dotType" class="control__label">Formato</label>
+            <select id="dotType" class="control__input">
+              <option value="square">Quadrado</option>
+              <option value="dots">Pontos</option>
+              <option value="rounded">Arredondado</option>
+              <option value="extra-rounded">Extra Arredondado</option>
+              <option value="classy-rounded">Classy Arredondado</option>
+            </select>
+          </div>
+          <div class="control--column">
+            <label for="errorCorrection" class="control__label">Correção de Erro</label>
+            <select id="errorCorrection" class="control__input" title="Níveis mais altos (Q, H) permitem leitura mesmo com o código danificado ou com um logo.">
+              <option value="L">Baixa (L)</option>
+              <option value="M" selected>Média (M)</option>
+              <option value="Q">Alta (Q)</option>
+              <option value="H">Máxima (H)</option>
+            </select>
           </div>
         </div>
-      </div>
 
-      <!-- Grupo: Opções Avançadas -->
-      <div class="control-group">
-        <label for="errorCorrectionLevel" class="control-group__label">Nível de Correção de Erro</label>
-        <select id="errorCorrectionLevel" class="control-group__input" title="Quanto maior o nível, mais fácil a leitura caso o QR Code esteja danificado ou com um logo.">
-          <option value="L">Baixo (L)</option>
-          <option value="M" selected>Médio (M)</option>
-          <option value="Q">Alto (Q)</option>
-          <option value="H">Máximo (H)</option>
-        </select>
-      </div>
-
-      <!-- Grupo: Download -->
-      <div class="control-group">
-        <label for="fileName" class="control-group__label">Nome do Arquivo</label>
-        <input type="text" id="fileName" class="control-group__input" value="meu-qrcode">
-        <div class="control-group__row control-group__row--buttons">
-          <button id="downloadPNG" class="button button--primary">Baixar PNG</button>
-          <button id="downloadSVG" class="button button--secondary">Baixar SVG</button>
+        <div class="control--row">
+          <div class="control--column">
+            <label class="control__label">Cor Módulos</label>
+            <div class="control--row">
+              <input type="color" id="dotColor" class="control__input" value="#000000">
+              <input type="text" id="dotColorHex" class="control__input" value="#000000">
+              <button class="color-preset" onclick="resetColor('dotColor', '#000000')">Padrão</button>
+            </div>
+          </div>
+          <div class="control--column">
+            <label class="control__label">Cor Fundo</label>
+            <div class="control--row">
+              <input type="color" id="bgColor" class="control__input" value="#ffffff">
+              <input type="text" id="bgColorHex" class="control__input" value="#ffffff">
+              <button class="color-preset" onclick="resetColor('bgColor', '#ffffff')">Padrão</button>
+            </div>
+          </div>
         </div>
+
+        <div class="control">
+          <label for="logoInput" class="control__label">Logo (Opcional)</label>
+          <input type="file" id="logoInput" class="control__input" accept="image/png, image/jpeg, image/svg+xml">
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button id="downloadPNG" class="button button--primary">Baixar PNG</button>
+        <button id="downloadSVG" class="button button--secondary">Baixar SVG</button>
+        <button id="resetButton" class="button button--danger">Resetar</button>
       </div>
     </div>
 
-    <!-- Painel de Pré-visualização -->
-    <div class="qr-generator__preview">
-      <div id="canvas" class="qr-generator__canvas"></div>
-      <div id="infoBox" class="qr-generator__info">Tamanho: 300x300px</div>
+    <!-- Coluna de Pré-visualização -->
+    <div class="qr-playground__preview">
+      <div id="canvas" class="qr-playground__canvas"></div>
     </div>
   </main>
 
-  <!-- Scripts -->
-  <script src="assets/js/libs/qr-code-styling.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script>
+    const MODULE_SIZE_PX = 8;
+    const defaultValues = {
+      qrData: '',
+      fileName: '',
+      marginModules: 2,
+      dotType: 'square',
+      errorCorrection: 'M',
+      dotColor: '#000000',
+      bgColor: '#ffffff',
+    };
+
+    function getOptions() {
+      const data = document.getElementById("qrData").value;
+      const marginModules = parseInt(document.getElementById("marginModules").value);
+      const dotType = document.getElementById("dotType").value;
+      const dotColor = document.getElementById("dotColor").value;
+      const bgColor = document.getElementById("bgColor").value;
+      const errorCorrection = document.getElementById("errorCorrection").value;
+      const logoInput = document.getElementById("logoInput").files[0];
+
+      return {
+        opts: {
+          width: 320, height: 320, type: "svg",
+          data: data || " ",
+          image: logoInput ? URL.createObjectURL(logoInput) : null,
+          margin: marginModules * MODULE_SIZE_PX,
+          qrOptions: { errorCorrectionLevel: errorCorrection },
+          dotsOptions: { type: dotType, color: dotColor },
+          backgroundOptions: { color: bgColor },
+          imageOptions: { crossOrigin: "anonymous", margin: 4 }
+        },
+        marginModules
+      };
+    }
+
+    function updateQRCode() {
+      const canvas = document.getElementById("canvas");
+      canvas.innerHTML = '';
+      if (window.qrCode && window.qrCode._options.image) {
+        URL.revokeObjectURL(window.qrCode._options.image);
+      }
+
+      const { opts, marginModules } = getOptions();
+      window.qrCode = new QRCodeStyling(opts);
+      window.qrCode.append(canvas);
+
+      setTimeout(() => {
+        if (window.qrCode && window.qrCode._qr) {
+          const modules = window.qrCode._qr.getModuleCount();
+          if (modules > 0) {
+            const sizePx = modules * MODULE_SIZE_PX + (marginModules * MODULE_SIZE_PX * 2);
+            document.getElementById("infoBox").innerText = `Módulos: ${modules}x${modules} | Tamanho: ${sizePx}px`;
+          }
+        }
+      }, 150);
+    }
+
+    function setupEventListeners() {
+      document.querySelectorAll("input, select").forEach(el => el.addEventListener("input", updateQRCode));
+
+      ['dotColor', 'bgColor'].forEach(id => {
+        const colorPicker = document.getElementById(id);
+        const hexInput = document.getElementById(`${id}Hex`);
+        colorPicker.addEventListener('input', () => hexInput.value = colorPicker.value);
+        hexInput.addEventListener('input', () => {
+          if (/^#[0-9A-F]{6}$/i.test(hexInput.value)) {
+            colorPicker.value = hexInput.value;
+            updateQRCode();
+          }
+        });
+      });
+
+      document.getElementById("downloadPNG").addEventListener("click", () => download('png'));
+      document.getElementById("downloadSVG").addEventListener("click", () => download('svg'));
+      document.getElementById("resetButton").addEventListener("click", resetAll);
+    }
+
+    function download(ext) {
+      if (!document.getElementById("qrData").value) {
+        alert("Por favor, insira um conteúdo para o QR Code antes de baixar.");
+        return;
+      }
+      const fileName = document.getElementById("fileName").value || "qrcode";
+      window.qrCode.download({ name: fileName, extension: ext });
+    }
+
+    window.resetColor = function(id, color) {
+      document.getElementById(id).value = color;
+      document.getElementById(`${id}Hex`).value = color;
+      updateQRCode();
+    }
+
+    function resetAll() {
+      if (!confirm("Tem certeza que deseja resetar todas as opções?")) return;
+      Object.keys(defaultValues).forEach(key => {
+        document.getElementById(key).value = defaultValues[key];
+      });
+      document.getElementById('logoInput').value = '';
+      resetColor('dotColor', defaultValues.dotColor);
+      resetColor('bgColor', defaultValues.bgColor);
+      updateQRCode();
+    }
+
+    setupEventListeners();
+    updateQRCode();
+  </script>
 </body>
 </html>
