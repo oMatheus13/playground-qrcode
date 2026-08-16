@@ -2,51 +2,55 @@
 
 ## 📜 Sobre o Projeto
 
-O **Gerador de QR Code Profissional** é uma ferramenta web _all-in-one_ criada para a geração rápida e personalizável de QR Codes. Diferente de muitos geradores online, esta ferramenta foi pensada para uso em **produção gráfica e profissional**, onde a confiabilidade, o controle granular e a exportação em alta qualidade são essenciais.
+O **Gerador de QR Code Profissional** é uma ferramenta web _all-in-one_ criada para a geração rápida e altamente personalizável de QR Codes. Desenvolvido para atender tanto necessidades digitais quanto de **produção gráfica e profissional**, o playground oferece controle técnico granular sobre dimensões, margens, formatos e exportação vetorial de alta qualidade.
 
-O projeto é contido em um único arquivo `index.html`, tornando-o extremamente portátil, rápido e funcional 100% offline, sem a necessidade de um servidor web.
+O projeto é contido em um único arquivo `index.html`, tornando-o extremamente portátil, rápido e funcional 100% offline, sem necessidade de servidores web.
 
-## ✨ Funcionalidades Principais
+---
 
-- **Interface Compacta e Intuitiva:** Todos os controles são visíveis em uma única tela, sem necessidade de rolagem, otimizando o fluxo de trabalho.
-- **Controle Granular:**
-    - **Conteúdo Dinâmico:** Suporta qualquer texto ou URL.
-    - **Margem Precisa:** Defina a "zona de silêncio" (margem) em múltiplos de módulos, uma prática essencial para garantir a legibilidade em qualquer leitor.
-    - **Personalização Visual:** Altere o formato dos módulos (quadrado, pontos, arredondado, etc.) e as cores tanto dos módulos quanto do fundo.
-- **Qualidade de Produção:**
-    - **Correção de Erro (ECC):** Escolha entre os níveis L, M, Q e H para garantir a leitura do QR Code mesmo que ele esteja parcialmente obstruído (por um logo) ou danificado.
-    - **Suporte a Logo:** Adicione facilmente um logo no centro do QR Code.
-- **Exportação Profissional:**
-    - **PNG:** Baixe em formato raster para uso digital rápido.
-    - **SVG:** Exporte em formato vetorial, ideal para impressão em alta resolução (banners, crachás, embalagens) sem perda de qualidade.
-- **Feedback em Tempo Real:** A caixa de informação exibe o número de módulos e o tamanho final em pixels, atualizado instantaneamente a cada alteração.
-- **Funcionalidades de Conveniência:**
-    - **Reset Rápido:** Um botão para restaurar todas as configurações para o padrão.
-    - **Predefinições de Cor:** Volte facilmente para o clássico preto e branco com um clique.
+## ✨ Funcionalidades
+
+- **Interface Compacta e Moderna:** Layout dark mode em grade de 2 colunas com pré-visualização em tempo real e sem necessidade de rolagem de página.
+- **Controle Granular e Técnico:**
+  - **Conteúdo Dinâmico:** Suporta qualquer texto, link ou payload com atualização via *debounce* (100ms) para máxima fluidez.
+  - **Margem Externa em Módulos:** Defina com exatidão a "zona de silêncio" em múltiplos de módulos (cada módulo = 8px).
+  - **Formato dos Módulos:** Opções para módulos *Quadrados*, *Pontos*, *Arredondados*, *Classy Arredondados* e *Extra Arredondados*.
+  - **Formato dos Cantos (Olhos):** Personalização independente dos três cantos do código (*Quadrado*, *Ponto*, *Extra Arredondado*).
+  - **Sincronização de Cores:** Seletores de cor visuais sincronizados bidirecionalmente com campos de código hexadecimal.
+- **Qualidade de Produção & Logos:**
+  - **Correção de Erro (ECC):** Níveis L, M, Q e H com seleção automática de segurança máxima (H) ao anexar imagens.
+  - **Suporte a Logo Central:** Upload de logos (PNG, JPG, SVG) com slider de proporção e botão de remoção rápida.
+  - **Autoajuste de Margem do Logo:** Limites automáticos inteligentes baseados no tamanho do logo (máximo de 1 módulo para < 40% e até 3 módulos para 40%).
+  - **Gerenciamento de Memória:** Liberação automática de URLs de objetos (`URL.revokeObjectURL`) para evitar vazamentos de memória.
+- **Exportação & Produtividade:**
+  - **Baixar PNG:** Exportação raster para uso digital imediato.
+  - **Baixar SVG:** Exportação vetorial pura, ideal para gráfica e corte sem perda de nitidez.
+  - **Copiar PNG:** Copia a imagem diretamente para a área de transferência do sistema operacional.
+  - **Copiar SVG:** Copia o código vetorial em texto com um clique.
+  - **Toast de Notificação:** Feedback visual flutuante para confirmação de ações de cópia e reset.
+  - **Download Offline:** Botão para salvar uma cópia completa da ferramenta no disco para uso local.
+- **Feedback em Tempo Real:** Caixa de informações técnica exibindo quantidade exata de módulos (ex: `29x29`) e dimensão final calculada em pixels.
+
+---
 
 ## 🚀 Como Usar
 
-Este projeto é um único arquivo autocontido. A utilização é extremamente simples:
+Por ser uma aplicação autocontida em arquivo único:
 
-1.  **Baixe o Arquivo:** Faça o download do arquivo `index.html`.
-2.  **Abra no Navegador:** Abra o arquivo em qualquer navegador moderno (Chrome, Firefox, Edge, etc.).
-3.  **Pronto!** A ferramenta já está funcionando.
+1. **Abra o arquivo:** Dê um duplo clique no arquivo `index.html` em qualquer navegador moderno (Chrome, Firefox, Edge, Opera, etc.).
+2. **Personalize:** Digite seu link/texto, escolha as cores, formato e adicione um logo se desejar.
+3. **Exporte:** Baixe em PNG/SVG ou copie direto para sua área de transferência.
 
-Não é necessário instalar nada, configurar um servidor ou ter conexão com a internet!
+---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **HTML5:** Para a estrutura da página.
-- **CSS3:** Para a estilização moderna e responsiva, utilizando variáveis para um tema coeso.
-- **JavaScript (ES6+):** Para toda a lógica de interatividade e manipulação do QR Code.
+- **HTML5:** Estrutura semântica e acessível.
+- **CSS3:** Design responsivo com CSS Variables, Grid e Flexbox.
+- **JavaScript (ES6+):** Código limpo, componentizado, com JSDoc docstrings e integração com a biblioteca `qr-code-styling`.
 
-## 🎯 Por Que Este Projeto?
+---
 
-Este gerador foi criado para resolver problemas comuns encontrados em ferramentas online:
+## 🎯 Licença
 
-- **Falta de Controle Técnico:** Muitos geradores não oferecem controle sobre módulos e margens, cruciais para impressão.
-- **Limitações de Exportação:** A exportação em SVG (vetor) raramente é gratuita.
-- **Dependência Online:** A maioria requer conexão com a internet e pode ter limitações de uso.
-- **Interfaces Poluídas:** Muitas ferramentas são carregadas de anúncios e opções desnecessárias.
-
-Este projeto oferece uma solução limpa, poderosa e gratuita para profissionais e entusiastas.
+Distribuído sob a licença MIT. Consulte o arquivo `LICENSE` para mais detalhes.
