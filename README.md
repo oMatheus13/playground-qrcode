@@ -1,5 +1,12 @@
 # Gerador de QR Code Profissional
 
+[![Release](https://img.shields.io/badge/release-v1.0.0-blue.svg)](https://github.com/oMatheus13/playground-qrcode/releases)
+[![Status](https://img.shields.io/badge/status-conclu%C3%ADdo-brightgreen.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> [!NOTE]
+> **Status da Versão Open Source:** Esta versão marca a entrega estável e final (**v1.0.0**) do Playground QR Code em código aberto. O projeto está completo, autocontido e funcional para uso livre sob os termos da licença MIT. Novas iterações e versões avançadas serão conduzidas em uma solução independente.
+
 ## 📜 Sobre o Projeto
 
 O **Gerador de QR Code Profissional** é uma ferramenta web _all-in-one_ criada para a geração rápida e altamente personalizável de QR Codes. Desenvolvido para atender tanto necessidades digitais quanto de **produção gráfica e profissional**, o playground oferece controle técnico granular sobre dimensões, margens, formatos e exportação vetorial de alta qualidade.
